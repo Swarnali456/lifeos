@@ -1,1 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f7fb">
+  <title>LifeOS — Your Personal Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#">
+        <span class="brand-mark">L</span>
+        <span>LifeOS</span>
+      </a>
 
+      <p class="nav-label">WORKSPACE</p>
+      <button class="nav-link active" data-view="overview"><span>◫</span> Overview</button>
+      <button class="nav-link" data-view="manage"><span>✓</span> Manage life</button>
+      <button class="nav-link" data-view="learn"><span>✦</span> Learn & grow</button>
+      <button class="nav-link" data-view="preferences"><span>⚙</span> Preferences & memory</button>
+
+      <div class="sidebar-bottom">
+        <div class="privacy-note">🔒 Your data stays in this browser.</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="today-label">YOUR PERSONAL SPACE</p>
+          <h1 id="page-title">Good evening</h1>
+        </div>
+
+        <div class="top-actions">
+          <label class="search-wrap">
+            <span>⌕</span>
+            <input id="global-search" type="search" placeholder="Search LifeOS..." autocomplete="off">
+            <kbd>/</kbd>
+          </label>
+          <button class="icon-button" id="theme-toggle" aria-label="Toggle dark mode">◐</button>
+        </div>
+      </header>
+
+      <section class="view active" id="view-overview">
+        <div class="welcome-card">
+          <div>
+            <p class="eyebrow light">A LITTLE PROGRESS ADDS UP</p>
+            <h2 id="welcome-title">Make today count.</h2>
+            <p id="welcome-subtitle">A calm place to organise your goals, build habits and keep learning.</p>
+          </div>
+          <div class="welcome-orbit">✦</div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span class="stat-icon lavender">✓</span>
+            <p>Tasks completed</p>
+            <strong id="stat-completed">0</strong>
+            <small>Keep moving at your pace</small>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-icon mint">◎</span>
+            <p>Active goals</p>
+            <strong id="stat-goals">0</strong>
+            <small>Small steps, big direction</small>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-icon peach">↗</span>
+            <p>Habits checked today</p>
+            <strong id="stat-habits">0</strong>
+            <small>Consistency over perfection</small>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">YOUR NEXT STEPS</p>
+                <h3>Tasks to focus on</h3>
+              </div>
+              <button class="text-button" data-go="manage">View all →</button>
+            </div>
+            <div id="overview-tasks" class="compact-list empty-state">
+              No tasks yet. Add one small task to get started.
+            </div>
+          </article>
+
+          <article class="panel suggestion-panel">
+            <p class="eyebrow">A SUGGESTION FOR YOU</p>
+            <h3 id="suggestion-title">Start with one small win.</h3>
+            <p id="suggestion-text">Add a task or goal. You can make progress without planning your entire day.</p>
+            <button class="button button-secondary" data-go="manage">Plan a little →</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-manage">
+        <div class="section-intro">
+          <p class="eyebrow">MAKE SPACE FOR WHAT MATTERS</p>
+          <h2>Manage your life</h2>
+          <p>Keep your tasks, goals, habits and spending in one simple place.</p>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">GET THINGS DONE</p>
+                <h3>My tasks</h3>
+              </div>
+              <span class="count-badge" id="task-count">0</span>
+            </div>
+            <form id="task-form" class="inline-form">
+              <input id="task-input" maxlength="100" placeholder="What needs doing?" required>
+              <button class="button" type="submit">Add task</button>
+            </form>
+            <ul id="task-list" class="item-list"></ul>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">THINK LONG-TERM</p>
+                <h3>My goals</h3>
+              </div>
+            </div>
+            <form id="goal-form" class="inline-form">
+              <input id="goal-input" maxlength="100" placeholder="A goal you care about" required>
+              <button class="button" type="submit">Add goal</button>
+            </form>
+            <ul id="goal-list" class="item-list"></ul>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">ONE DAY AT A TIME</p>
+                <h3>Daily habits</h3>
+              </div>
+              <span class="count-badge" id="habit-count">0/0</span>
+            </div>
+            <form id="habit-form" class="inline-form">
+              <input id="habit-input" maxlength="70" placeholder="e.g. Read for 15 minutes" required>
+              <button class="button" type="submit">Add</button>
+            </form>
+            <ul id="habit-list" class="item-list"></ul>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">BE MINDFUL</p>
+                <h3>Simple budget</h3>
+              </div>
+            </div>
+            <form id="expense-form" class="stack-form">
+              <input id="expense-name" maxlength="60" placeholder="Expense name" required>
+              <div class="inline-form">
+                <input id="expense-amount" type="number" min="1" step="0.01" placeholder="Amount (₹)" required>
+                <button class="button" type="submit">Add</button>
+              </div>
+            </form>
+            <div class="budget-total">
+              <span>Total recorded</span>
+              <strong id="expense-total">₹0</strong>
+            </div>
+            <ul id="expense-list" class="item-list"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-learn">
+        <div class="section-intro">
+          <p class="eyebrow">STAY CURIOUS</p>
+          <h2>Learn & grow</h2>
+          <p>Collect interests, save useful notes and give your brain a little exercise.</p>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel">
+            <p class="eyebrow">YOUR INTERESTS</p>
+            <h3>Things I want to learn</h3>
+            <form id="interest-form" class="inline-form">
+              <input id="interest-input" maxlength="60" placeholder="e.g. Python, astronomy" required>
+              <button class="button" type="submit">Add</button>
+            </form>
+            <div id="interest-list" class="tag-list"></div>
+          </article>
+
+          <article class="panel fact-panel">
+            <p class="eyebrow">A QUICK FACT</p>
+            <div class="fact-symbol">✧</div>
+            <h3 id="fact-title">A little science break</h3>
+            <p id="fact-text">Light from the Sun takes about 8 minutes and 20 seconds to reach Earth.</p>
+            <button class="button button-secondary" id="new-fact">Another fact</button>
+          </article>
+
+          <article class="panel">
+            <p class="eyebrow">YOUR KNOWLEDGE SPACE</p>
+            <h3>Learning notes</h3>
+            <form id="note-form" class="stack-form">
+              <input id="note-title" maxlength="70" placeholder="Note title" required>
+              <textarea id="note-content" rows="3" maxlength="1000" placeholder="Write something you learned..." required></textarea>
+              <button class="button" type="submit">Save note</button>
+            </form>
+            <div id="note-list" class="note-list"></div>
+          </article>
+
+          <article class="panel quiz-panel">
+            <p class="eyebrow">QUICK CHECK</p>
+            <h3 id="quiz-question">Which planet is known as the Red Planet?</h3>
+            <div id="quiz-options" class="quiz-options"></div>
+            <p id="quiz-feedback" class="feedback" aria-live="polite"></p>
+            <button class="text-button" id="next-question">Next question →</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-preferences">
+        <div class="section-intro">
+          <p class="eyebrow">MAKE IT YOURS</p>
+          <h2>Preferences & memory</h2>
+          <p>Choose what LifeOS should remember on this device. You are in control.</p>
+        </div>
+
+        <article class="panel preferences-panel">
+          <form id="preferences-form" class="stack-form">
+            <label>Your preferred name
+              <input id="pref-name" maxlength="40" placeholder="What should LifeOS call you?">
+            </label>
+
+            <label>What are you currently working towards?
+              <input id="pref-goal" maxlength="120" placeholder="e.g. Learn Python or prepare for exams">
+            </label>
+
+            <label>Preferred focus time
+              <select id="pref-time">
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </label>
+
+            <label class="check-row">
+              <input id="pref-memory" type="checkbox">
+              Save these preferences in this browser
+            </label>
+
+            <button class="button" type="submit">Save preferences</button>
+          </form>
+
+          <div class="privacy-box">
+            <strong>Your privacy matters</strong>
+            <p>Tasks, notes and preferences are stored in your browser using local storage. They are not automatically synced to another device or sent to an AI service. Anyone with access to this browser profile may be able to see them.</p>
+            <button class="button button-danger" id="clear-data">Clear all LifeOS data</button>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        LifeOS · Your space, your pace.
+        <span>Made for steady progress.</span>
+      </footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+  </html>
